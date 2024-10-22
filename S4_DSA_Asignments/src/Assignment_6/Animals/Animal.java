@@ -1,4 +1,4 @@
-package Assignment_6;
+package Assignment_6.Animals;
 
 public abstract class Animal {
     private String name;
