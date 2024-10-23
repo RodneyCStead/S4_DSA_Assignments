@@ -6,15 +6,19 @@ import Assignment_6.Animals.Animal;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AnimalShelter {
 
     public Queue<Dog> dogs;
     public Queue<Cat> cats;
 
+
     public AnimalShelter() {
         dogs = new LinkedList<>();
         cats = new LinkedList<>();
+
     }
 
     // enqueue
@@ -26,7 +30,7 @@ public class AnimalShelter {
         }
     }
 
-    // dequeue any
+    // dequeue any (choose to select the oldest cat vs the oldest dog if timestamp is same)
     public Animal dequeueAny() {
         if (dogs.isEmpty() && cats.isEmpty()) {
             return null;
@@ -54,4 +58,20 @@ public class AnimalShelter {
     public Cat dequeueCat() {
         return cats.poll();
     }
+
+    public List<Animal> listAllAnimals() {
+        List <Animal> allAnimals = new ArrayList<>();
+        allAnimals.addAll(dogs);
+        allAnimals.addAll(cats);
+        return allAnimals;
+    }
+
+    public void printAllAnimals() {
+        System.out.println("Animals in the shelter:");
+        for (Animal animal : listAllAnimals()) {
+            System.out.println("Animal Name: " + animal.getName() + " ||" + " Type: " + animal.getClass().getSimpleName());
+        }
+    }
+
+
 }
