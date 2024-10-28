@@ -13,13 +13,9 @@ public class DoubleDimension {
 
     public void insert(int row, int col, int value) {
         try {
-            if (row >= 0 && row < rows && col >= 0 && col < cols) {
-                array[row][col] = value;
-            } else {
-                throw new IndexOutOfBoundsException("Invalid index");
-            }
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println(e.getMessage());
+            array[row][col] = value;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Invalid index: " + e.getMessage());
         }
     }
 
@@ -57,8 +53,6 @@ public class DoubleDimension {
                 int deletedValue = array[row][col];
                 array[row][col] = 0; // Assuming 0 is the default value
                 System.out.println("Deleted element: " + deletedValue);
-            } else {
-                throw new IndexOutOfBoundsException("Invalid index");
             }
         } catch (IndexOutOfBoundsException e) {
             System.out.println(e.getMessage());
