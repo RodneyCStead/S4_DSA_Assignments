@@ -1,11 +1,8 @@
 package Assignment_3;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MovieTheater {
     private final String theaterName;
-    private final List<Seat> seats;
+    private final Seat[][] seats;
     private final int numRows;
     private final int seatsPerRow;
 
@@ -13,13 +10,11 @@ public class MovieTheater {
         this.theaterName = theaterName;
         this.numRows = numRows;
         this.seatsPerRow = seatsPerRow;
-        this.seats = new ArrayList<>();
+        this.seats = new Seat[numRows][seatsPerRow];
 
-        int lastRow = 'A' + (numRows - 1);
-        for (char row = 'A'; row <= lastRow; row++) {
-            for (int seatNum = 1; seatNum <= seatsPerRow; seatNum++) {
-                Seat seat = new Seat(row + String.format("%02d", seatNum));
-                seats.add(seat);
+        for (int row = 0; row < numRows; row++) {
+            for (int seatNum = 0; seatNum < seatsPerRow; seatNum++) {
+                seats[row][seatNum] = new Seat((char)('A' + row) + String.format("%02d", seatNum + 1));
             }
         }
     }
@@ -29,28 +24,33 @@ public class MovieTheater {
     }
 
     public boolean reserveSeat(String seatNumber) {
-        Seat requestedSeat = null;
-        for (Seat seat : seats) {
-            if (seat.getSeatNumber().equals(seatNumber)) {
-                requestedSeat = seat;
-                break;
+        for (int row = 0; row < numRows; row++) {
+            for (int seatNum = 0; seatNum < seatsPerRow; seatNum++) {
+                if (seats[row][seatNum].getSeatNumber().equals(seatNumber)) {
+                    return seats[row][seatNum].reserve();
+                }
             }
         }
+        System.out.println("There is no seat " + seatNumber);
+        return false;
+    }
 
-        if (requestedSeat == null) {
-            System.out.println("There is no seat " + seatNumber);
-            return false;
+    public boolean cancelReservedSeat(String seatNumber) {
+        for (int row = 0; row < numRows; row++) {
+            for (int seatNum = 0; seatNum < seatsPerRow; seatNum++) {
+                if (seats[row][seatNum].getSeatNumber().equals(seatNumber)) {
+                    return seats[row][seatNum].cancel();
+                }
+            }
         }
-
-        return requestedSeat.reserve();
+        System.out.println("There is no seat " + seatNumber);
+        return false;
     }
 
     public void printSeatingChart() {
-        int seatIndex = 0;
-        for (int i = 0; i < numRows; i++) {
-            for (int j = 0; j < seatsPerRow; j++) {
-                Seat seat = seats.get(seatIndex++);
-                System.out.print(seat.isReserved() ? "X " : "0 ");
+        for (int row = 0; row < numRows; row++) {
+            for (int seatNum = 0; seatNum < seatsPerRow; seatNum++) {
+                System.out.print(seats[row][seatNum].isReserved() ? "X " : "0 ");
             }
             System.out.println();
         }

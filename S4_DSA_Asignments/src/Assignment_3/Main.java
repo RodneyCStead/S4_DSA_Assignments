@@ -27,7 +27,7 @@ public class Main {
 
         // Cancel a reservation
         System.out.println("\nCancelling reservation for seat B02:");
-        theater.reserveSeat("B02");
+        theater.cancelReservedSeat("B02");
 
         // Print the seating chart after cancellation
         System.out.println("\nSeating chart after cancellation:");
